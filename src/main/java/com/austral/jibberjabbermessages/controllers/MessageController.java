@@ -47,7 +47,7 @@ public class MessageController {
     @MessageMapping("/chat/{to}/{id}")
     public void sendMessage(@DestinationVariable String to, @Payload final SendMessageDto chatMessage, @DestinationVariable String id) {
         simpMessagingTemplate.convertAndSend("/topic/messages/" + to, chatMessage);
-        messageService.sendMessage(to, id, chatMessage);
+        messageService.sendMessage(id, to, chatMessage);
     }
 
 

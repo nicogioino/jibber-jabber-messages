@@ -20,6 +20,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 }
 
 test {

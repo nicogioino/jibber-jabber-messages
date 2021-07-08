@@ -49,17 +49,13 @@ public class MessageService {
         else throw new IllegalArgumentException("No existing chats");
     }
 
-    public ChatInfoDto createChat (String fromId, String toId) {
+    public void createChat (String fromId, String toId) {
         Optional<Chat> chat1 = chatRepository.findByUser1AndUser2(fromId, toId);
         Optional<Chat> chat2 = chatRepository.findByUser1AndUser2(toId, fromId);
-
-        ReducedUserDto user1 = userClient.getUserById(fromId);
-        ReducedUserDto user2 = userClient.getUserById(toId);
 
         if (chat1.isEmpty() && chat2.isEmpty()){
             Chat chat = new Chat(fromId,toId);
             Chat savedChat = chatRepository.save(chat);
-            return ChatInfoDto.fromChat(savedChat,user1,user2);
         }
         else throw new IllegalArgumentException("Chat already exists");
     }
