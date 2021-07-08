@@ -67,3 +67,24 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:latest
           docker push $IMAGE_ID:latest
+
+  azure-deploy:
+    needs: push
+    name: Deploy to Azure Dev VM
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Connection
+        uses: appleboy/ssh-action@master
+        env:
+          REPO_OWNER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.VM_GITHUB_TOKEN }}
+        with:
+          username: ${{ secrets.VM_USERNAME }}
+          host: ${{ secrets.VM_HOST_DEV }}
+          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+          envs: REPO_OWNER, GITHUB_TOKEN
+          script: |
+            cd jibber-jabber-infraestructure
+            sudo docker-compose -f docker-compose-dev.yml down
+            sudo docker system prune --all --force
+            sudo docker-compose -f docker-compose-dev.yml up --detach
