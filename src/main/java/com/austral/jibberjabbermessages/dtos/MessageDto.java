@@ -14,7 +14,7 @@ public class MessageDto {
 
     String content;
 
-    String sender;
+    String sentBy;
 
     LocalDateTime sentTime;
 
