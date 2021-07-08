@@ -68,6 +68,16 @@ public class MessageService {
         if (chat1.isPresent()) chat = chat1.get();
         if (chat2.isPresent()) chat = chat2.get();
 
+        if (chat1.isEmpty() && chat2.isEmpty()) {
+            createChat(fromId,toId);
+        }
+
+        Optional<Chat> chat3 = chatRepository.findByUser1AndUser2(fromId, toId);
+        Optional<Chat> chat4 = chatRepository.findByUser1AndUser2(toId, fromId);
+
+        if (chat3.isPresent()) chat = chat3.get();
+        if (chat4.isPresent()) chat = chat4.get();
+
         ReducedUserDto user1 = userClient.getUserById(fromId);
         ReducedUserDto user2 = userClient.getUserById(toId);
 
