@@ -17,7 +17,6 @@ import java.util.List;
 
 @Controller
 @RestController
-@RequestMapping("/messages")
 public class MessageController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
